@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../utils/colors.dart';
 import '../widgets/customButton.dart';
+import './login.dart';
+import './signup.dart';
 
 class welcomeScreen extends StatelessWidget {
   const welcomeScreen({super.key});
-  final routeName = '/welcome';
+  static const String routeName = '/welcome';
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +29,17 @@ class welcomeScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: customButton(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, Login.routeName);
+                  },
                   text: "Log In",
                 ),
               ),
               customButton(
-                onTap: () {},
-                text: "Sign In",
+                onTap: () {
+                  Navigator.pushNamed(context, SignUp.routeName);
+                },
+                text: "Sign Up",
               ),
             ],
           ),
