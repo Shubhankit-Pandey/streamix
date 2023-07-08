@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "330756781087",
+    "project_id": "streamix-9ee74",
+    "storage_bucket": "streamix-9ee74.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330756781087:android:f75205c04efea9c4d2512a",
+        "android_client_info": {
+          "package_name": "com.example.streamix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "330756781087-rbq1sf3jutaftd1d5f4sf08777ropcmg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAunHYvGsyAhwgStyy6CWPv3156JvFzSWU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "330756781087-rbq1sf3jutaftd1d5f4sf08777ropcmg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

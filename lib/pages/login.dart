@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:streamix/pages/homescreen.dart';
+import 'package:streamix/resources/auth_methods.dart';
 import 'package:streamix/widgets/customButton.dart';
 import '../widgets/customTextfield.dart';
 
@@ -13,7 +15,17 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
-  final TextEditingController _usernamecontroller = TextEditingController();
+  final AuthMethods _authMethods = AuthMethods();
+  loginUser() async {
+    bool res = await _authMethods.loginUser(
+      context,
+      _emailcontroller.text,
+      _passwordcontroller.text,
+    );
+    if (res) {
+      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +71,7 @@ class _LoginState extends State<Login> {
               const SizedBox(
                 height: 20,
               ),
-              customButton(onTap: () => {}, text: "Login")
+              customButton(onTap: loginUser, text: "Login")
             ],
           ),
         ),
