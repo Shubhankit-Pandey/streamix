@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:streamix/pages/welcome_screen.dart';
 import 'package:streamix/providers/user_provider.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../config.dart';
 import '../providers/user_provider.dart';
@@ -21,11 +23,24 @@ class BroadcastScreen extends StatefulWidget {
 
 class _BroadcastScreenState extends State<BroadcastScreen> {
   late final RtcEngine _engine;
+  XFile? _video;
   List<int> uid = [];
   @override
   void initState() {
     super.initState();
     _initEngine();
+  }
+
+  Future getVideo() async {
+    XFile? video;
+    video = await ImagePicker.platform.getVideo(source: ImageSource.camera);
+    setState(() {
+      _video = video;
+    });
+
+    return Container(
+      child: Text("hellp"),
+    );
   }
 
   void _initEngine() async {
@@ -86,13 +101,15 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          children: [
-            _renderVideo(user),
-          ],
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pushNamed(welcomeScreen.routeName);
+        return true;
+      },
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(8),
+          child: getVideo() as Widget,
         ),
       ),
     );
