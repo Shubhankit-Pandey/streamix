@@ -29,6 +29,7 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
   GoLiveScreen() async {
     String channelId = await FirestoreMethods()
         .startLiveStream(context, _titlecontroller.text, image);
+    print(channelId);
     if (channelId.isNotEmpty) {
       showSnackBar(context, "Livestream has started successfully!");
       Navigator.of(context)

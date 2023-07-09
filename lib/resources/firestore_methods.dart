@@ -13,18 +13,24 @@ import 'package:streamix/utils/utils.dart';
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final StorageMethods _storageMethods = StorageMethods();
-  startLiveStream(BuildContext context, String title, Uint8List? image) async {
+
+  Future<String> startLiveStream(
+      BuildContext context, String title, Uint8List? image) async {
     final user = Provider.of<UserProvider>(context, listen: false);
+    String channelId = '';
     try {
-      if (title.isNotEmpty) {
-        if ((await _firestore.collection('livestream').doc(user.user.uid).get())
+      if (title.isNotEmpty && image != null) {
+        if (!(await _firestore
+                .collection('livestream')
+                .doc(user.user.uid)
+                .get())
             .exists) {
           String thumbnailUrl = await _storageMethods.uploadImagetoStorage(
             "livestream-thumbnails",
-            image!,
+            image,
             user.user.uid,
           );
-          String channelId = '${user.user.uid}${user.user.username}';
+          channelId = '${user.user.uid}${user.user.username}';
           LiveStream liveStream = LiveStream(
             title: title,
             image: thumbnailUrl,
@@ -38,6 +44,9 @@ class FirestoreMethods {
               .collection('livestream')
               .doc(channelId)
               .set(liveStream.toMap());
+        } else {
+          showSnackBar(
+              context, "Two Livestreams cannot start at the same time");
         }
       } else {
         showSnackBar(context, "Please enter all fields.");
@@ -45,5 +54,7 @@ class FirestoreMethods {
     } on FirebaseException catch (e) {
       showSnackBar(context, e.message!);
     }
+
+    return channelId;
   }
 }

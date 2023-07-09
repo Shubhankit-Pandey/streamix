@@ -14,17 +14,13 @@ void showSnackBar(BuildContext context, String content) {
 }
 
 Future<Uint8List?> pickImage() async {
-  PermissionStatus status = await Permission.photos.status;
-  // if (status.isRestricted) print("restrictd");
-  if (status == PermissionStatus.granted) {
-    FilePickerResult? pickedImage =
-        await FilePicker.platform.pickFiles(type: FileType.image);
-    if (pickedImage != null) {
-      if (kIsWeb) {
-        return pickedImage.files.single.bytes;
-      }
-      return await File(pickedImage.files.single.path!).readAsBytes();
+  FilePickerResult? pickedImage =
+      await FilePicker.platform.pickFiles(type: FileType.image);
+  if (pickedImage != null) {
+    if (kIsWeb) {
+      return pickedImage.files.single.bytes;
     }
+    return await File(pickedImage.files.single.path!).readAsBytes();
   }
   return null;
 }
